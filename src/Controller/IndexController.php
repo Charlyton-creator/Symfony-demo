@@ -11,10 +11,19 @@ class IndexController extends AbstractController
     /**
      * @Route('/{name}')
      */
-    public function home($name = "abalo" /* version 1 on peut definir la varaible de manière glbale ici*/){
+    public function home(){
         //return new Response('<h1> Ma première page </h1>');
-        /*version 2 soit venir ici et attribuer une valeur*/
-        $name = "Charly";
-        return $this->render('index.html.twig', ['name' =>$name]);
+        $articles = ['Article1', 'Article2', 'Article3'];
+        return $this->render('article/index.html.twig', ['articles'=>$articles]);
+    }
+
+    /**
+     * @Route('/article/{id}')
+     */
+    public function getOne($id){
+        //return new Response('<h1> Ma première page </h1>');
+        $articles = ['Article1', 'Article2', 'Article3'];
+        $onearticle = $articles[$id];
+        return $this->render('article/detail.html.twig', ['article'=>$onearticle]);
     }
 }

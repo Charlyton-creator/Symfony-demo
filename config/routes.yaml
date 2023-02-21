@@ -1,3 +1,9 @@
 index:
    path: /
    controller: App\Controller\IndexController::home
+
+article:
+   path: /article/{id}
+   controller: App\Controller\IndexController::getOne
+   
+
