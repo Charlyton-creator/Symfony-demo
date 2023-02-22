@@ -5,18 +5,20 @@
 <table class="table table-striped" id="articles">
   <thead>
     <tr>
-      <th scope="col">Article</th>
+      <th scope="col">Nom</th>
+      <th scope="col">Prix</th>
       <th scope="col">Actions</th>
     </tr>
   </thead>
   <tbody>
   {% for article in articles %}
     <tr>
-      <td>{{article}}</td>
+      <td>{{article.nom()}}</td>
+      <td>{{article.prix()}}</td>
       <td>
-        <a href="/article/1" class="btn btn-dark">Details</a>
-        <a href="/article/1" class="btn btn-warning">Update</a>
-        <a href="/article/1" class="btn btn-danger">Delete</a>
+        <a href="/article/{{article.id()}}" class="btn btn-dark">Details</a>
+        <a href="/article/update/{{article.id()}}" class="btn btn-warning">Update</a>
+        <a href="/article/{{article.id()}}" class="btn btn-danger">Delete</a>
       </td>
     </tr>
   {% endfor %}

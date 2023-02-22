@@ -5,9 +5,11 @@
 <div class="card" style="width: 18rem;">
   <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVNMTJj1utVWqDKm6eCEqDMFTgSu8yGMy2Ww&usqp=CAU" class="card-img-top" alt="...">
   <div class="card-body">
-    <h5 class="card-title">{{article}}</h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
+    <h5 class="card-title">{{ article.nom }}</h5>
+    <h1 class="card-text">Prix: {{ article.prix }}</h1>
+    <hr>
+    <p class="card-text">Detail ici</p>
+    <a href="/" class="btn btn-primary">Retour</a>
   </div>
 </div>
 {% else %}

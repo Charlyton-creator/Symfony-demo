@@ -2,8 +2,15 @@ index:
    path: /
    controller: App\Controller\IndexController::home
 
-article:
-   path: /article/{id}
-   controller: App\Controller\IndexController::getOne
-   
+articles:
+   path: /article/ajouter
+   controller: App\Controller\IndexController::new
 
+articleshow:
+   path: /article/{id}
+   controller: App\Controller\IndexController::show
+
+updatearticle:
+   path: /article/update/{id}
+   controller: App\Controller\IndexController::update
+   
