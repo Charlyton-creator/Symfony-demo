@@ -10,7 +10,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use App\form\ArticleType;
+use App\Form\ArticleType;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class IndexController extends AbstractController
 {
@@ -52,10 +53,10 @@ class IndexController extends AbstractController
      * @Route('/article/ajouter', name="new_article")
      * Method({"GET","POST"})
      */
-    public function new(Request $request){
+    public function new(Request $request, ValidatorInterface $validator){
         $article = new Article();
 
-        $form = $this->createFormBuilder(ArticleType::class, $article);
+        $form = $this->createForm(ArticleType::class, $article);
 
         $form->handleRequest($request);
         if($form->isSubmitted() AND $form->isValid()){
@@ -66,16 +67,17 @@ class IndexController extends AbstractController
 
             return $this->redirectToRoute('index');
         }
-        return $this->render('article/new.html.twig', ['form' =>$form->createView()]);
+        $errors = $validator->validate($article);
+        return $this->render('article/new.html.twig', ['form' =>$form->createView(),'errors' => $errors]);
     }
     /**
      * @Route('/article/update/{id}', name="article_update")
      * Method({"GET","PUT"})
      */
-    public function update(Request $request, $id){
+    public function update(Request $request, $id, ValidatorInterface $validator){
         $article = $this->getDoctrine()->getRepository(Article::class)->find($id);
 
-        $form = $this->createFormBuilder(ArticleType::class, $article);
+        $form = $this->createForm(ArticleType::class, $article);
 
         $form->handleRequest($request);
         if($form->isSubmitted() AND $form->isValid()){
@@ -86,7 +88,8 @@ class IndexController extends AbstractController
 
             return $this->redirectToRoute('index');
         }
-        return $this->render('article/new.html.twig', ['form' =>$form->createView()]);
+        $errors = $validator->validate($article);
+        return $this->render('article/update.html.twig', ['form' =>$form->createView(), 'errors'=> $errors]);
     }
     /**
      * @Route('/article/delete/{id}')

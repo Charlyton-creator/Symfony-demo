@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ArticleRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ArticleRepository::class)
@@ -20,11 +21,15 @@ class Article
     /**
      * @ORM\Column(type="string", length=255)
      */
+    #[Assert\NotBlank]
+    #[Assert\TextType]
     private $nom;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=0)
      */
+    #[Assert\NotBlank]
+    #[Assert\TextType]
     private $prix;
 
     public function getId(): ?int
