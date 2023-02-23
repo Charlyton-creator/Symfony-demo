@@ -10,6 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use App\form\ArticleType;
 
 class IndexController extends AbstractController
 {
@@ -48,18 +49,13 @@ class IndexController extends AbstractController
     //    return new Response("Articles enregistrés avec succes ");
     // }
     /**
-     * @Route('/article/ajouter')
+     * @Route('/article/ajouter', name="new_article")
      * Method({"GET","POST"})
      */
     public function new(Request $request){
         $article = new Article();
 
-        $form = $this->createFormBuilder($article)
-        ->add('nom', TextType::class)
-        ->add('prix', TextType::class)
-        ->add('save', SubmitType::class, array(
-            'label' => 'Creer')
-        )->getform();
+        $form = $this->createFormBuilder(ArticleType::class, $article);
 
         $form->handleRequest($request);
         if($form->isSubmitted() AND $form->isValid()){
@@ -79,12 +75,7 @@ class IndexController extends AbstractController
     public function update(Request $request, $id){
         $article = $this->getDoctrine()->getRepository(Article::class)->find($id);
 
-        $form = $this->createFormBuilder($article)
-        ->add('nom', TextType::class)
-        ->add('prix', TextType::class)
-        ->add('save', SubmitType::class, array(
-            'label' => 'Modifier')
-        )->getform();
+        $form = $this->createFormBuilder(ArticleType::class, $article);
 
         $form->handleRequest($request);
         if($form->isSubmitted() AND $form->isValid()){
@@ -95,7 +86,17 @@ class IndexController extends AbstractController
 
             return $this->redirectToRoute('index');
         }
-        return $this->render('article/update.html.twig', ['form' =>$form->createView()]);
+        return $this->render('article/new.html.twig', ['form' =>$form->createView()]);
     }
-
+    /**
+     * @Route('/article/delete/{id}')
+     * Method("DELETE")
+     */
+    public function delete($id){
+        $article = $this->getDoctrine()->getRepository(Article::class)->find($id);
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($article);
+        $entityManager->flush();
+        return $this->redirectToRoute('index');
+    }
 }

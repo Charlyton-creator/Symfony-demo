@@ -13,4 +13,7 @@ articleshow:
 updatearticle:
    path: /article/update/{id}
    controller: App\Controller\IndexController::update
-   
+
+deletearticle:
+   path: /article/delete/{id}
+   controller: App\Controller\IndexController::delete
